@@ -1,7 +1,7 @@
 <div classname="logo">
 
 <p align="center">
-  <img height="100" height="auto" src="https://user-images.githubusercontent.com/78480857/219823945-e0ac948a-c21e-4a0f-8a58-d9664abfa6f5.png">
+  <img height="200" height="auto" src="https://user-images.githubusercontent.com/78480857/219823945-e0ac948a-c21e-4a0f-8a58-d9664abfa6f5.png">
 </div>
 <br>
 <br>
