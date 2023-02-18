@@ -46,6 +46,23 @@ wget -O quasar.sh https://raw.githubusercontent.com/DiscoverMyself/Exorde-Labs/r
 Quasar [Official Docs](https://testnet.quasar.fi/)
 
 # Configurations
+## State Sync (by: Nodexcapital)
+```
+quasard tendermint unsafe-reset-all --home $HOME/.quasarnode --keep-addr-book
+
+SNAP_RPC="https://rpc.quasar.nodexcapital.com:443"
+
+LATEST_HEIGHT=$(curl -s $SNAP_RPC/block | jq -r .result.block.header.height); \
+BLOCK_HEIGHT=$((LATEST_HEIGHT - 2000)); \
+TRUST_HASH=$(curl -s "$SNAP_RPC/block?height=$BLOCK_HEIGHT" | jq -r .result.block_id.hash)
+
+sed -i.bak -E "s|^(enable[[:space:]]+=[[:space:]]+).*$|\1true| ; \
+s|^(rpc_servers[[:space:]]+=[[:space:]]+).*$|\1\"$SNAP_RPC,$SNAP_RPC\"| ; \
+s|^(trust_height[[:space:]]+=[[:space:]]+).*$|\1$BLOCK_HEIGHT| ; \
+s|^(trust_hash[[:space:]]+=[[:space:]]+).*$|\1\"$TRUST_HASH\"|" $HOME/.quasarnode/config/config.toml
+
+sudo systemctl start quasard && sudo journalctl -fu quasard -o cat
+```
 
 ## Wallet Configuration
 **Add new wallet**
