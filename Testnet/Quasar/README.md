@@ -95,10 +95,10 @@ quasard keys delete $WALLET
 **Create Validator**
 ```
 quasard tx staking create-validator \
-    --amount=500000000000$DENOM \
+    --amount=500000000000uqsr \
     --pubkey=$(dymd tendermint show-validator) \
     --moniker="$NODENAME" \
-    --chain-id=$CHAIN \
+    --chain-id=qsr-questnet-04 \
     --from=$WALLET \
     --commission-rate="0.10" \
     --commission-max-rate="0.20" \
