@@ -5,11 +5,11 @@
 </div>
 <br>
 <br>
-<\n>
 
-<p align="center">
+
+
 # Quasar testnet
-</p>
+
 
 - [Website](https://www.quasar.fi/)
 
