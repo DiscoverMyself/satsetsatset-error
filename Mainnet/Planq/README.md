@@ -202,7 +202,7 @@ screen -R autostake
 ./autostake.sh
 ```
 
-** Run HalfLife for Node & Validator Monitoring **
+**Run HalfLife for Node & Validator Monitoring**
 ```
 wget -O halflife.sh https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/Mainnet/Planq/halflife.sh && chmod +x halflife.sh && ./halflife.sh
 ```
