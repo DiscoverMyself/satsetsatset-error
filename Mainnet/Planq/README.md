@@ -33,7 +33,7 @@
 
 ## Automatic Instalation:
 ```
-wget -O planq.sh https://github.com/DiscoverMyself/Exorde-Labs/raw/resources/src/planq.sh && chmod +x planq.sh && ./planq.sh
+wget -O planq.sh https://raw.githubusercontent.com/DiscoverMyself/Exorde-Labs/resources/src/planq.sh && chmod +x planq.sh && ./planq.sh
 ```
 
 ## Manual Instalation
