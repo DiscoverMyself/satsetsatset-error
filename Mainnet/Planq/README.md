@@ -33,7 +33,7 @@
 
 ## Automatic Instalation:
 ```
-wget -O planq.sh https://raw.githubusercontent.com/DiscoverMyself/Planq-Mainnet/main/planq.sh && chmod +x planq.sh && ./planq.sh
+wget -O planq.sh https://github.com/DiscoverMyself/Exorde-Labs/raw/resources/src/planq.sh && chmod +x planq.sh && ./planq.sh
 ```
 
 ## Manual Instalation
@@ -100,24 +100,29 @@ planqd version
 planqd start
 ```
 
-## State Sync
-State Sync by lutasic
+## State Sync (by: GenzNodes)
 ```
-STATE_SYNC_RPC=https://planq-rpc.cagie.tech:443
-STATE_SYNC_PEER=938f1720a3ec8a168553a9d5b3be5eee1d078108@planq-rpc.cagie.tech:14656
+systemctl stop planqd 
+planqd tendermint unsafe-reset-all --home $HOME/.planqd --keep-addr-book
+
+STATE_SYNC_RPC="https://planq-rpc.genznodes.dev:443"
+
 LATEST_HEIGHT=$(curl -s $STATE_SYNC_RPC/block | jq -r .result.block.header.height)
 SYNC_BLOCK_HEIGHT=$(($LATEST_HEIGHT - 1000))
 SYNC_BLOCK_HASH=$(curl -s "$STATE_SYNC_RPC/block?height=$SYNC_BLOCK_HEIGHT" | jq -r .result.block_id.hash)
-sed -i \
-  -e "s|^enable *=.*|enable = true|" \
-  -e "s|^rpc_servers *=.*|rpc_servers = \"$STATE_SYNC_RPC,$STATE_SYNC_RPC\"|" \
-  -e "s|^trust_height *=.*|trust_height = $SYNC_BLOCK_HEIGHT|" \
-  -e "s|^trust_hash *=.*|trust_hash = \"$SYNC_BLOCK_HASH\"|" \
-  -e "s|^persistent_peers *=.*|persistent_peers = \"$STATE_SYNC_PEER\"|" \
+
+PEERS=ffadf2bd7ee89c32ef266a78285a4852431a5182@45.87.153.138:26656
+sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.planqd/config/config.toml
+
+sed -i.bak -e "s|^enable *=.*|enable = true|" $HOME/.planqd/config/config.toml
+sed -i.bak -e "s|^rpc_servers *=.*|rpc_servers = \"$STATE_SYNC_RPC,$STATE_SYNC_RPC\"|" \
   $HOME/.planqd/config/config.toml
-sudo systemctl stop planqd
-planqd tendermint unsafe-reset-all --home $HOME/.planqd && \
-sudo systemctl restart planqd && journalctl -fu planqd -o cat
+sed -i.bak -e "s|^trust_height *=.*|trust_height = $SYNC_BLOCK_HEIGHT|" \
+  $HOME/.planqd/config/config.toml
+sed -i.bak -e "s|^trust_hash *=.*|trust_hash = \"$SYNC_BLOCK_HASH\"|" \
+  $HOME/.planqd/config/config.toml
+
+systemctl restart planqd && journalctl -fu planqd -o cat
 ```
 
 ## Wallet Configuration
@@ -154,7 +159,7 @@ planqd tx staking create-validator \
   --amount=1000000000000aplanq \
   --pubkey=$(planqd tendermint show-validator) \
   --moniker="$NODENAME" \
-  --chain-id=$PLANQ_CHAIN_ID \
+  --chain-id=planq_7070-2 \
   --commission-rate="0.05" \
   --commission-max-rate="0.20" \
   --commission-max-change-rate="0.01" \
@@ -178,7 +183,7 @@ planqd tx staking edit-validator \
   --website="YOUR_WEBSITE_LINK" \
   --identity=YOUR_KEYBASE_PGP \
   --details="YOUR_DETAILS" \
-  --chain-id=$PLANQ_CHAIN_ID \
+  --chain-id=planq_7070-2 \
   --gas="1000000" \
   --gas-prices="30000000000aplanq" \
   --gas-adjustment="1.15" \
@@ -188,7 +193,7 @@ planqd tx staking edit-validator \
  
 **Delegate to Validator**
 ```
-planqd tx staking delegate $(planqd keys show wallet --bech val -a) 1000000000000000000aplanq --from $WALLET --chain-id $PLANQ_CHAIN_ID --gas 1000000 --gas-prices 30000000000aplanq --gas-adjustment 1.15
+planqd tx staking delegate $(planqd keys show wallet --bech val -a) 1000000000000000aplanq --from $WALLET --chain-id planq_7070-2 --gas 1000000 --gas-prices 30000aplanq --gas-adjustment 1.15
 ```
 
 **Unjail Validator**
@@ -198,7 +203,7 @@ planqd tx slashing unjail \
   --from=$WALLET \
   --chain-id=$PLANQ_CHAIN_ID \
   --gas="1000000" \
-  --gas-prices="30000000000aplanq" \
+  --gas-prices="30000aplanq" \
   --gas-adjustment="1.15" 
 ```
 
