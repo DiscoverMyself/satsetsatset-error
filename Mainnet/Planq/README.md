@@ -100,31 +100,6 @@ planqd version
 planqd start
 ```
 
-## State Sync (by: GenzNodes)
-```
-systemctl stop planqd 
-planqd tendermint unsafe-reset-all --home $HOME/.planqd --keep-addr-book
-
-STATE_SYNC_RPC="https://planq-rpc.genznodes.dev:443"
-
-LATEST_HEIGHT=$(curl -s $STATE_SYNC_RPC/block | jq -r .result.block.header.height)
-SYNC_BLOCK_HEIGHT=$(($LATEST_HEIGHT - 1000))
-SYNC_BLOCK_HASH=$(curl -s "$STATE_SYNC_RPC/block?height=$SYNC_BLOCK_HEIGHT" | jq -r .result.block_id.hash)
-
-PEERS=ffadf2bd7ee89c32ef266a78285a4852431a5182@45.87.153.138:26656
-sed -i.bak -e "s/^persistent_peers *=.*/persistent_peers = \"$PEERS\"/" $HOME/.planqd/config/config.toml
-
-sed -i.bak -e "s|^enable *=.*|enable = true|" $HOME/.planqd/config/config.toml
-sed -i.bak -e "s|^rpc_servers *=.*|rpc_servers = \"$STATE_SYNC_RPC,$STATE_SYNC_RPC\"|" \
-  $HOME/.planqd/config/config.toml
-sed -i.bak -e "s|^trust_height *=.*|trust_height = $SYNC_BLOCK_HEIGHT|" \
-  $HOME/.planqd/config/config.toml
-sed -i.bak -e "s|^trust_hash *=.*|trust_hash = \"$SYNC_BLOCK_HASH\"|" \
-  $HOME/.planqd/config/config.toml
-
-systemctl restart planqd && journalctl -fu planqd -o cat
-```
-
 ## Wallet Configuration
 **Add new wallet**
 ```
