@@ -9,7 +9,7 @@ RPCADDRESS=$(planqd status | jq -r .NodeInfo.other.rpc_address)
 CONSENSUSADDRESS=$(planqd tendermint show-address)
 
 
-# install 
+# build 
 cd $HOME
 git clone https://github.com/strangelove-ventures/half-life
 cd half-life
@@ -22,6 +22,9 @@ sed -i "s/monikername/$MONIKER/" $HOME/half-life/config.yaml
 sed -i "s#tcp://localhost:26657#$RPCADDRESS#" $HOME/half-life/config.yaml
 sed -i "s/plqvalcons1/$CONSENSUSADDRESS/" $HOME/half-life/config.yaml
 sed -i "s/DISCORD_USER_ID/$DISCORD_ID/" $HOME/half-life/config.yaml
+
+# install
+go install
 
 # create service file
 
@@ -55,3 +58,4 @@ systemctl enable halflife
 systemctl start halflife
 
 
+echo -e "\e[1m\e[33mTo check logs status : journalctl -u halflife -f\e[0m"
