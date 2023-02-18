@@ -57,5 +57,10 @@ systemctl daemon-reload
 systemctl enable halflife
 systemctl start halflife
 
+sleep 2
+clear
 
+echo '================================================='
 echo -e "\e[1m\e[33mTo check logs status : journalctl -u halflife -f\e[0m"
+echo '================================================='
+sleep 2
