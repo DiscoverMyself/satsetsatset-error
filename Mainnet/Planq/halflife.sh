@@ -60,8 +60,8 @@ systemctl start halflife
 sleep 2
 clear
 
-echo '================================================='
+echo '============================================================='
 echo -e "\e[1m\e[36mTo check service status : systemctl status halflife\e[0m"
 echo -e "\e[1m\e[33mTo check logs status : journalctl -u halflife -f\e[0m"
-echo '================================================='
+echo '============================================================='
 sleep 2
