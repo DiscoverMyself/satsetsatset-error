@@ -11,7 +11,7 @@ npm install
 # setup .env file
 echo "\e[1m\e[121;254;12m"
 if [ ! $MNEMONIC ]; then
-	read -p "Enter your Mnemonic:\e[0m " MNEMONIC
+	read -p "Enter your Mnemonic: " MNEMONIC
 	echo 'export MNEMONIC='$MNEMONIC >> $HOME/.bash_profile
 fi
 echo "=======================e\[0m"
