@@ -29,7 +29,6 @@ sed -i "s/DISCORD_USER_ID/$DISCORD_ID/" $HOME/half-life/config.yaml
 go install
 
 # create service file
-
 sudo tee /etc/systemd/system/halflife.service << EOF
 [Unit]
 Description=Halflife
