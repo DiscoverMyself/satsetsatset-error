@@ -9,21 +9,20 @@ cd restake
 npm install
 
 # setup .env file
-echo "\e[1m\e[32m"
+echo "\e[1m\e[121;254;12m
 if [ ! $MNEMONIC ]; then
 	read -p "Enter your Mnemonic: " MNEMONIC
-echo "\e[0m"
 	echo 'export MNEMONIC='$MNEMONIC >> $HOME/.bash_profile
 fi
+\e{0m
 
 # set variable for validator address
-echo "\e[1m\e[31m"
+echo "\e[1m\e[255;165;0m
 if [ ! $VALOPER ]; then
-	read -p "Enter your Valoper Address: " VALOPER
-echo "\e[0m"	
+	read -p "Enter your Valoper Address: " VALOPER	
 	echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
 fi
-
+\e[0m"
 sudo tee ~/restake/.env << EOF
 MNEMONIC=$MNEMONIC
 EOF
@@ -126,6 +125,6 @@ sudo tee ~/restake/src/network.json <<EOF
 EOF
 
 echo '================================================='
-echo '                     \e[1m\e[32mDONE                        '
+echo '                     \e[1m\e[1;95mDONE                        \e[0m'
 echo "\e[1m\e[31mSilahkan lanjutkan ke step fork & pull github...\e[0m"
 echo '================================================='
