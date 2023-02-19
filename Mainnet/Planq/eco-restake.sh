@@ -40,12 +40,12 @@ docker-compose build --no-cache
 docker-compose run --rm app npm run autostake
 
 # setup cron timer
-sudo tee /var/spool/cron/crontabs/root << EOF
+sudo tee /var/spool/cron/crontabs/root <<EOF
 0 21 * * * /bin/bash -c "cd restake && docker compose run --rm app npm run autostake" > ./restake.log 2>&1
 EOF
 
 # create service file
-sudo tee /etc/systemd/system/restake.service > dev/null <<EOF
+sudo tee /etc/systemd/system/restake.service <<EOF
 [Unit]
 Description=restake service with docker compose
 Requires=docker.service
@@ -66,7 +66,7 @@ OnBootSec=300
 OnUnitActiveSec=300
 EOF
 
-sudo tee /etc/systemd/system/restake.timer > dev/null <<EOF
+sudo tee /etc/systemd/system/restake.timer <<EOF
 [Unit]
 Description=Restake bot timer
 
