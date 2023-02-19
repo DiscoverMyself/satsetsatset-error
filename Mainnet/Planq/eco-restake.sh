@@ -25,12 +25,20 @@ if [ ! $VALOPER ]; then
 fi
 echo "\e[1;92m=========================================================================================================================="
 echo "\e[0m."
-
+echo ""
+echo ""
 
 sudo tee ~/restake/.env << EOF
 MNEMONIC=$MNEMONIC
 EOF
 
+
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
+echo ""
 echo "\e[1m\e[32mStarting... \e[0m" && sleep 2
 
 # run docker
