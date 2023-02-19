@@ -1,3 +1,5 @@
+#!/bin/bash
+
 #set vars
 if [ ! $DISCORD_ID ]; then
 	read -p "Enter your Dicord ID: " DISCORD_ID
