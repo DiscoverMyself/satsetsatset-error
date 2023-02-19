@@ -9,21 +9,27 @@ cd restake
 npm install
 
 # setup .env file
-
+echo "\e[1m\e[32m"
 if [ ! $MNEMONIC ]; then
-	read -p "\e[1m\e[31mEnter your Mnemonic: " MNEMONIC
+	read -p "Enter your Mnemonic: " MNEMONIC
+echo "\e[0m"
 	echo 'export MNEMONIC='$MNEMONIC >> $HOME/.bash_profile
 fi
 
 # set variable for validator address
+echo "\e[1m\e[32m"
 if [ ! $VALOPER ]; then
-	read -p "\e[1m\e[31mEnter your Valoper Address: " VALOPER
+	read -p "Enter your Valoper Address: " VALOPER
+echo "\e[0m"	
 	echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
 fi
 
 sudo tee ~/restake/.env << EOF
 MNEMONIC=$MNEMONIC
 EOF
+
+clear
+echo -e "\e[1m\e[32m6. Starting... \e[0m" && sleep 2
 
 # run docker
 git pull
