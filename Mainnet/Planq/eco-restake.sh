@@ -17,7 +17,7 @@ echo "\e[0m"
 fi
 
 # set variable for validator address
-echo "\e[1m\e[32m"
+echo "\e[1m\e[31m"
 if [ ! $VALOPER ]; then
 	read -p "Enter your Valoper Address: " VALOPER
 echo "\e[0m"	
