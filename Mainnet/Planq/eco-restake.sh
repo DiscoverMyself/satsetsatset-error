@@ -31,7 +31,7 @@ sudo tee ~/restake/.env << EOF
 MNEMONIC=$MNEMONIC
 EOF
 
-echo "\e[1m\e[32m6. Starting... \e[0m" && sleep 2
+echo "\e[1m\e[32mStarting... \e[0m" && sleep 2
 
 # run docker
 git pull
