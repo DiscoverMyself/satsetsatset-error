@@ -123,7 +123,7 @@ EOF
 sudo tee ~/restake/src/network.json <<EOF
  {
     "name": "planq"
-    "ownerAddress":"plqvaloperxxxxxxxxx"
+    "ownerAddress":"$VALOPER"
  }
 EOF
 
