@@ -9,20 +9,20 @@ cd restake
 npm install
 
 # setup .env file
-echo "\e[1m\e[121;254;12m"
+echo "\e[1;92m"
 if [ ! $MNEMONIC ]; then
 	read -p "Enter your Mnemonic: " MNEMONIC
 	echo 'export MNEMONIC='$MNEMONIC >> $HOME/.bash_profile
 fi
-echo -e "======================="
+echo "====================================================================================================================="
 # set variable for validator address
 
-echo "\e[1m\e[255;165;0m"
+echo "\e[1;93m"
 if [ ! $VALOPER ]; then
 	read -p "Enter your Valoper Address: " VALOPER	
 	echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
 fi
-echo -e "=======================\e[0m"
+echo "\e[0m"
 
 sudo tee ~/restake/.env << EOF
 MNEMONIC=$MNEMONIC
