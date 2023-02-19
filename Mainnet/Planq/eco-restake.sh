@@ -11,13 +11,13 @@ npm install
 # setup .env file
 
 if [ ! $MNEMONIC ]; then
-	read -p "Enter your Mnemonic: " MNEMONIC
+	read -p "\e[1m\e[31mEnter your Mnemonic: " MNEMONIC
 	echo 'export MNEMONIC='$MNEMONIC >> $HOME/.bash_profile
 fi
 
 # set variable for validator address
 if [ ! $VALOPER ]; then
-	read -p "Enter your Valoper Address: " VALOPER
+	read -p "\e[1m\e[31mEnter your Valoper Address: " VALOPER
 	echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
 fi
 
@@ -120,6 +120,6 @@ sudo tee ~/restake/src/network.json <<EOF
 EOF
 
 echo '================================================='
-echo '                     DONE                        '
-echo -e "\e[1m\e[36mSilahkan lanjutkan ke step fork & pull github...\e[0m"
+echo '                     \e[1m\e[32mDONE                        '
+echo "\e[1m\e[31mSilahkan lanjutkan ke step fork & pull github...\e[0m"
 echo '================================================='
