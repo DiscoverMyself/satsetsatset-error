@@ -44,7 +44,7 @@ RELAYED_BY='Relayed by: ${MONIKER}/${DISCORD_ID}'
 ## 3. Set Hermes Config
 
 ```
-cat <<EOF > ~/.hermes/config.toml
+sudo tee ~/.hermes/config.toml <<EOF
 [global]
 log_level = 'debug'
 [mode.clients]
@@ -203,9 +203,9 @@ derivation = 'cosmos'
 [[chains]]
 id = 'planq_7070-2'
 type = 'CosmosSdk'
-rpc_addr = 'https://${RPC_ADDRESS}/'
-websocket_addr = 'ws://${RPC_ADDRESS}/websocket'
-grpc_addr = 'http://${GRPC_ADDRESS}/'
+rpc_addr = 'https://$RPC_ADDRESS/'
+websocket_addr = 'ws://$RPC_ADDRESS/websocket'
+grpc_addr = 'http://$GRPC_ADDRESS/'
 rpc_timeout = '20s'
 account_prefix = 'plq'
 key_name = 'relayer'
