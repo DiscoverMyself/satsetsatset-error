@@ -73,7 +73,7 @@ server {
 EOF
 ```
 
-**if you found some error, try to re-write `$host` and `request_uri` inside the file manually.
+**if you found some error, try to re-write `$host` and `request_uri` inside the file manually.**
 
 # 6. Test your .conf file
 ```
