@@ -114,6 +114,8 @@ crontab -e
 
 put in the bottom of the file:
 (minutes 0-59) (hour 0-23) (day 1-7) (month 1-30) (command =folder/file.sh)
+<br>
+<br>
 ex : 0 1 * * * /root/test.sh = in 01.00 am script in test.sh will executed
 
 
