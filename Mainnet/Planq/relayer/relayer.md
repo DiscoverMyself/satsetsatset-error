@@ -37,7 +37,7 @@ RPC_ADDRESS=<your_local_RPC_address>
 GRPC_ADDRESS=<your_local_gRPC_address>
 MONIKER=<your_validator_moniker>
 DISCORD_ID=<your_discord_id>
-RELAYED_BY='Relayed by: ${MONIKER}/${DISCORD_ID}'
+RELAYED_BY=$MONIKER/$DISCORD_ID
 ```
 ** setup "<...>" value into your own first **
 
