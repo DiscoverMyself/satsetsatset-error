@@ -35,6 +35,7 @@ hermes version
 API_ADDRESS=<your_local_API_address>
 RPC_ADDRESS=<your_local_RPC_address>
 GRPC_ADDRESS=<your_local_gRPC_address>
+GRPC_PORT=<your_local_gRPC_port>
 MONIKER=<your_validator_moniker>
 DISCORD_ID=<your_discord_id>
 RELAYED_BY=$MONIKER/$DISCORD_ID
@@ -204,8 +205,8 @@ derivation = 'cosmos'
 id = 'planq_7070-2'
 type = 'CosmosSdk'
 rpc_addr = 'https://$RPC_ADDRESS/'
-websocket_addr = 'ws://$RPC_ADDRESS/websocket'
-grpc_addr = 'http://$GRPC_ADDRESS/'
+websocket_addr = 'wss://$RPC_ADDRESS/websocket'
+grpc_addr = 'http://$GRPC_ADDRESS:$GRPC_PORT'
 rpc_timeout = '20s'
 account_prefix = 'plq'
 key_name = 'relayer'
@@ -371,7 +372,13 @@ hermes tx ft-transfer \
 ** you can spam this transaction using another chain too, for chance to validate transaction on relayer as relayer operator**
 <br>
 <br>
-**if your success validate transaction, you can see your address on operator address list ([Cosmos](https://www.mintscan.io/cosmos/relayers/channel-446),[Osmosis](https://www.mintscan.io/osmosis/relayers/channel-492), [Gravity](https://www.mintscan.io/gravity-bridge/relayers/channel-102))**
+**if your success validate transaction, you can see your address on operator address list:**
+<br>
+[Cosmos](https://www.mintscan.io/cosmos/relayers/channel-446)
+<br>
+[Osmosis](https://www.mintscan.io/osmosis/relayers/channel-492)
+<br>
+[Gravity](https://www.mintscan.io/gravity-bridge/relayers/channel-102)
 
 
 
