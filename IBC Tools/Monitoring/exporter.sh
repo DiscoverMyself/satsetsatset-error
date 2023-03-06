@@ -8,11 +8,11 @@ unset RPC_PORT
 unset GRPC_PORT
 
 # User Input
-read -p "\e[1m\e[32mEnter bond_denom value, for example, ubld for Agoric:\e[0m " BOND_DENOM
-read -p "\e[1m\e[32mEnter bench_prefix value, for example, agoric for Agoric:\e[0m " BENCH_PREFIX
-read -p "\e[1m\e[32mEnter rpc_port value or hit Enter for default port [26657]:\e[0m " RPC_PORT
+read -p "Enter bond_denom value: " BOND_DENOM
+read -p "Enter bench_prefix value, for example, agoric for Agoric: " BENCH_PREFIX
+read -p "Enter rpc_port value or hit Enter for default port [26657]: " RPC_PORT
 RPC_PORT=${RPC_PORT:-26657}
-read -p "\e[1m\e[32mEnter grpc_port value or hit Enter for default port [9090]:\e[0m " GRPC_PORT
+read -p "Enter grpc_port value or hit Enter for default port [9090]: " GRPC_PORT
 GRPC_PORT=${GRPC_PORT:-9090}
 
 echo '================================================='
