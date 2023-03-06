@@ -2,13 +2,13 @@
 # thanks to KJNodes
 
 # Set User Info
-read -p "\e[1m\e[32mEnter your IP:\e[0m " VALIDATOR_IP
-read -p "\e[1m\e[32mEnter your Prometheus Port(on app.toml file):\e[0m " PROMETHEUS_PORT
-read -p "\e[1m\e[32mEnter your Valoper Address:\e[0m " VALIDATOR_ADDRESS
-read -p "\e[1m\e[32mEnter your Operator Address:\e[0m " OPERATOR_ADDRESS
-read -p "\e[1m\e[32mEnter your Project Name:\e[0m " PROJECT_NAME
-read -p "\e[1m\e[32mEnter your Telegram User ID:\e[0m " TELEGRAM_ID
-read -p "\e[1m\e[32mEnter your Telegram BOT Tokens:\e[0m " TELEGRAM_TOKEN
+read -p "Enter your IP Address: " VALIDATOR_IP
+read -p "Enter your Prometheus Port(on app.toml file): " PROMETHEUS_PORT
+read -p "Enter your Valoper Address: " VALIDATOR_ADDRESS
+read -p "Enter your Operator Address: " OPERATOR_ADDRESS
+read -p "Enter your Project Name: " PROJECT_NAME
+read -p "Enter your Telegram User ID: " TELEGRAM_ID
+read -p "Enter your Telegram BOT Tokens: " TELEGRAM_TOKEN
 source $HOME/.bash_profile
 
 
