@@ -68,6 +68,10 @@ TELEGRAM_ADMIN="$TELEGRAM_ID"
 TELEGRAM_TOKEN="$TELEGRAM_TOKEN"
 EOF
 
+# export env files
+echo "export $(xargs < $HOME/cosmos_node_monitoring/config/.env)" > $HOME/.bash_profile
+source $HOME/.bash_profile
+
 # add validator config 
 $HOME/cosmos_node_monitoring/add_validator.sh $VALIDATOR_IP $PROMETHEUS_PORT $VALOPER_ADDRESS $OPERATOR_ADDRESS $PROJECT_NAME
 
