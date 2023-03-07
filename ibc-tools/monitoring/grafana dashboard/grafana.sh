@@ -45,6 +45,10 @@ rm -f master.zip
 sudo mkdir -p /opt/grafana-plugin
 sudo mv /opt/grafana-image-renderer-master /opt/grafana-plugin/
 
+# set grafana & prometheus config for public dashboard
+curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.ini > /etc/grafana/grafana.ini
+curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/prometheus.yml > /etc/prometheus/prometheus.yml
+
 # Build Grafana Render
 cd /opt/grafana-plugin/grafana-image-renderer-master
 yarn install --pure-lockfile
@@ -80,10 +84,6 @@ grafana-cli plugins install grafana-image-renderer
 #   -e "s|^;server_url *=.*|;server_url = http://127.0.0.1:8081/render|" \
 #   -e "s|^;callback_url *=.*|;callback_url = http://127.0.0.1:3000|" \
 #   /etc/grafana/grafana.ini
-
-# set grafana & prometheus config for public dashboard
-curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.ini > /etc/grafana/grafana.ini
-curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/prometheus.yml > /etc/prometheus/prometheus.yml
 
 # Start all services
 systemctl daemon-reload
