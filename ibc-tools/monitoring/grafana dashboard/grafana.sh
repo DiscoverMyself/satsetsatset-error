@@ -21,7 +21,7 @@ source $HOME/.bash_profile
 # Download and delete previous existing grafana & prrometheus
 cd $HOME
 rm -rf grafana.sh
-wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh -y
+wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh
 chmod +x resources.sh
 ./resources.sh uninstall grafana
 ./resources.sh uninstall prometheus
