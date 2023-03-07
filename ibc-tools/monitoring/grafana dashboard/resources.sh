@@ -12,7 +12,7 @@ MONITORING=$2
 
 
 function help(){
-echo "component-grafana [deploy|uninstall] [grafana|prometheus]"
+echo "resources [deploy|uninstall] [grafana|prometheus]"
 }
 
 
@@ -85,8 +85,8 @@ systemctl daemon-reload
 fi
 
 
-systemctl start prometheus
-systemctl enable prometheus
+// systemctl start prometheus
+// systemctl enable prometheus
 }
 
 
@@ -110,8 +110,9 @@ curl https://packages.grafana.com/gpg.key | sudo apt-key add -
 echo "deb https://packages.grafana.com/oss/deb stable main" > /etc/apt/sources.list.d/grafana.list
 apt update
 apt install grafana -y
-systemctl start grafana-server
-systemctl enable grafana-server
+
+// systemctl start grafana-server
+// systemctl enable grafana-server
 }
 
 function grafana:uninstall(){
