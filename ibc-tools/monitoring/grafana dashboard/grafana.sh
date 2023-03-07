@@ -8,17 +8,19 @@
 # User Input
 read -p "Enter your job : " JOB
 read -p "Enter your ip address : " IP
+read -p "Enter your prometheus port : " PORT
 read -p "Enter your valoper address : " VALOPER
 read -p "Enter your operator address : " OPERATOR
 echo 'export JOB='$JOB >> $HOME/.bash_profile
 echo 'export IP='$IP >> $HOME/.bash_profile
+echo 'export PORT='$PORT >> $HOME/.bash_profile
 echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
 echo 'export OPERATOR='$OPERATOR >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Download and delete previous existing grafana & prrometheus
 cd $HOME
-wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh
+wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh -y
 chmod +x resources.sh
 ./resources.sh uninstall grafana
 ./resources.sh uninstall prometheus
