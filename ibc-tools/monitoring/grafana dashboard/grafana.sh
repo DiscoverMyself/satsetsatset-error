@@ -1,17 +1,24 @@
 
 
 #
-# Thanks to: Salman Wahib (sxlmnwb)
+# Thanks to: Salman Wahib (sxlmnwb) && kj89nodes
+# Edited by: Aprame
 #
 
 # User Input
-
 read -p "Enter your job : " JOB
-read -p "Enter 
+read -p "Enter your ip address : " IP
+read -p "Enter your valoper address : " VALOPER
+read -p "Enter your operator address : " OPERATOR
+echo 'export JOB='$JOB >> $HOME/.bash_profile
+echo 'export IP='$IP >> $HOME/.bash_profile
+echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
+echo 'export OPERATOR='$OPERATOR >> $HOME/.bash_profile
+source $HOME/.bash_profile
 
-# Download Component Grafana And Self Delete
+# Download and delete previous existing grafana & prrometheus
 cd $HOME
-wget https://raw.githubusercontent.com/sxlzptprjkt/resource/master/grafana/resources.sh
+wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh
 chmod +x resources.sh
 ./resources.sh uninstall grafana
 ./resources.sh uninstall prometheus
@@ -64,26 +71,33 @@ sudo systemctl daemon-reload
 sudo systemctl start grafana-render
 grafana-cli plugins install grafana-image-renderer
 
-# Setting Port || Config Grafana (Public Dashboard)
+# Setting Port || Config Grafana
 # sed -i.bak \
 #   -e "s|^;http_port *=.*|;http_port = 3000|" \
 #   -e "s|^;server_url *=.*|;server_url = http://127.0.0.1:8081/render|" \
 #   -e "s|^;callback_url *=.*|;callback_url = http://127.0.0.1:3000|" \
 #   /etc/grafana/grafana.ini
 
-curl -Ls <link> > /etc/grafana/grafana.ini
+# set grafana & prometheus config for public dashboard
+curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.ini > /etc/grafana/grafana.ini
+curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/prometheus.yml > /etc/prometheus/prometheus.yml
 
-# Restart Grafana
-sudo systemctl restart grafana-server
+# Start all services
+systemctl daemon-reload
+systemctl enable prometheus
+systemctl start prometheus
+systemctl enable grafana-server
+systemctl start grafana-server
+
 
 echo -e "\e[1m\e[31mSETUP FINISHED\e[0m"
 echo ""
 echo -e "USERNAME : \e[1m\e[31madmin\e[0m"
 echo -e "PASSWORD : \e[1m\e[31madmin\e[0m"
-echo -e "LOGIN YOUR GRAFANA : \e[1m\e[31mhttp://$(curl -s ifconfig.me):3000/login\e[0m"
+echo -e "LOGIN TO YOUR GRAFANA DASHBOARD : \e[1m\e[31mhttp://$(curl -s ifconfig.me):3000/login\e[0m"
 echo ""
-echo -e "CHECK LOGS GRAFANA    : \e[1m\e[31msystemctl status grafana-server\e[0m"
-echo -e "CHECK LOGS PROMETHEUS : \e[1m\e[31msystemctl status prometheus\e[0m"
+echo -e "CHECK GRAFANA LOGS   : \e[1m\e[31msystemctl status grafana-server\e[0m"
+echo -e "CHECK PROMETHEUS LOGS : \e[1m\e[31msystemctl status prometheus\e[0m"
 echo ""
 
 cd #HOME
