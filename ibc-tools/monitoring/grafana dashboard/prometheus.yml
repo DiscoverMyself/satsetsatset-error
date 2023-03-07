@@ -18,20 +18,20 @@ scrape_configs:
     metrics_path: /metrics
     static_configs:
       - targets:
-          - $IP:9090
+          - ${IP}:9090
   - job_name: cosmos
     metrics_path: /metrics
     static_configs:
       - targets:
-          - $IP:26660
+          - ${IP}:${PORT}
         labels: {}
   - job_name: node
     metrics_path: /metrics
     static_configs:
       - targets:
-          - $IP:9100
+          - ${IP}:9100
         labels:
-          instance: $JOB
+          instance: ${JOB}
   - job_name: validators
     metrics_path: /metrics/validators
     static_configs:
@@ -46,9 +46,9 @@ scrape_configs:
         target_label: __param_address
     static_configs:
       - targets:
-          - $IP:9300
+          - ${IP}:9300
         labels:
-          address: $VALOPER
+          address: ${VALOPER}
   - job_name: wallet
     metrics_path: /metrics/wallet
     relabel_configs:
@@ -57,6 +57,6 @@ scrape_configs:
         target_label: __param_address
     static_configs:
       - targets:
-          - $IP:9300
+          - ${IP}:9300
         labels:
-          address: $OPERATOR
+          address: ${OPERATOR}
