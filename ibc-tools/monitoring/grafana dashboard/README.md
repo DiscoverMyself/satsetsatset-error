@@ -1,4 +1,10 @@
 # Auto Installer
+
+## 1. Exporter
+```
+wget -O exporter.sh https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/exporter.sh && chmod +x exporter.sh && ./exporter.sh
+```
+## 2. Grafana
 ```
 wget -O grafana.sh https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.sh && chmod +x grafana.sh && ./grafana.sh
 ```
