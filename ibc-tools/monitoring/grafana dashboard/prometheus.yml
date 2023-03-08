@@ -36,7 +36,7 @@ scrape_configs:
     metrics_path: /metrics/validators
     static_configs:
       - targets:
-          - $IP:9300
+          - ${IP}:9300
         labels: {}
   - job_name: validator
     metrics_path: /metrics/validator
