@@ -1,7 +1,7 @@
 
 
 #
-# Thanks to: Salman Wahib (sxlmnwb) && kj89nodes
+# Thanks to: RoomIT && kj89nodes
 # Edited by: Aprame
 #
 
@@ -21,8 +21,10 @@ source $HOME/.bash_profile
 # Download and delete previous existing grafana & prrometheus
 cd $HOME
 rm -rf grafana.sh
-wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh
+rm -rf exporter.sh
+wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh && wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/exporter.sh
 chmod +x resources.sh
+chmod +x exporter.sh
 ./resources.sh uninstall grafana
 ./resources.sh uninstall prometheus
 
@@ -47,7 +49,71 @@ sudo mv /opt/grafana-image-renderer-master /opt/grafana-plugin/
 
 # set grafana & prometheus config for public dashboard
 curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.ini > /etc/grafana/grafana.ini
-curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/prometheus.yml > /etc/prometheus/prometheus.yml
+
+sudo tee /etc/prometheus/prometheus.yml <<EOF
+global:
+  scrape_interval: 15s
+  scrape_timeout: 10s
+  evaluation_interval: 15s
+alerting:
+  alertmanagers:
+    - follow_redirects: true
+      scheme: http
+      timeout: 10s
+      api_version: v2
+      static_configs:
+        - targets:
+            - alertmanager:9093
+rule_files:
+  - /etc/prometheus/alerts/alert.rules
+scrape_configs:
+  - job_name: prometheus
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - ${IP}:9090
+  - job_name: cosmos
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - ${IP}:${PORT}
+        labels: {}
+  - job_name: node
+    metrics_path: /metrics
+    static_configs:
+      - targets:
+          - ${IP}:9100
+        labels:
+          instance: ${JOB}
+  - job_name: validators
+    metrics_path: /metrics/validators
+    static_configs:
+      - targets:
+          - $IP:9300
+        labels: {}
+  - job_name: validator
+    metrics_path: /metrics/validator
+    relabel_configs:
+      - source_labels:
+          - address
+        target_label: __param_address
+    static_configs:
+      - targets:
+          - ${IP}:9300
+        labels:
+          address: ${VALOPER}
+  - job_name: wallet
+    metrics_path: /metrics/wallet
+    relabel_configs:
+      - source_labels:
+          - address
+        target_label: __param_address
+    static_configs:
+      - targets:
+          - ${IP}:9300
+        labels:
+          address: ${OPERATOR}
+EOF
 
 # Build Grafana Render
 cd /opt/grafana-plugin/grafana-image-renderer-master
