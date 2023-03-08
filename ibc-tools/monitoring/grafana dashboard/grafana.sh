@@ -22,9 +22,8 @@ source $HOME/.bash_profile
 cd $HOME
 rm -rf grafana.sh
 rm -rf exporter.sh
-wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh && wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/exporter.sh
+wget https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/resources.sh
 chmod +x resources.sh
-chmod +x exporter.sh
 ./resources.sh uninstall grafana
 ./resources.sh uninstall prometheus
 
@@ -115,6 +114,9 @@ scrape_configs:
           address: ${OPERATOR}
 EOF
 
+clear
+sleep 1
+
 # Build Grafana Render
 cd /opt/grafana-plugin/grafana-image-renderer-master
 yarn install --pure-lockfile
@@ -138,6 +140,9 @@ ExecStart=/usr/bin/node /opt/grafana-plugin/grafana-image-renderer-master/build/
 [Install]
 WantedBy=multi-user.target
 EOF
+
+clear
+sleep 1
 
 # Register Start Service And Install Plugin
 sudo systemctl daemon-reload
