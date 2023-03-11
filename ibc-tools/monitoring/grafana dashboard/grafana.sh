@@ -6,16 +6,12 @@
 #
 
 # User Input
-read -p "Enter your job : " JOB
 read -p "Enter your ip address : " IP
 read -p "Enter your prometheus port : " PORT
-read -p "Enter your valoper address : " VALOPER
-read -p "Enter your operator address : " OPERATOR
-echo 'export JOB='$JOB >> $HOME/.bash_profile
+read -p "Enter network chain-id  : " CHAIN
 echo 'export IP='$IP >> $HOME/.bash_profile
 echo 'export PORT='$PORT >> $HOME/.bash_profile
-echo 'export VALOPER='$VALOPER >> $HOME/.bash_profile
-echo 'export OPERATOR='$OPERATOR >> $HOME/.bash_profile
+echo 'export CHAIN='$CHAIN >> $HOME/.bash_profile
 source $HOME/.bash_profile
 
 # Download and delete previous existing grafana & prrometheus
@@ -83,67 +79,28 @@ EOF
 # Set prometheus config
 sudo tee /etc/prometheus/prometheus.yml <<EOF
 global:
-  scrape_interval: 15s
-  scrape_timeout: 10s
+  scrape_interval:     15s
   evaluation_interval: 15s
-alerting:
-  alertmanagers:
-    - follow_redirects: true
-      scheme: http
-      timeout: 10s
-      api_version: v2
-      static_configs:
-        - targets:
-            - alertmanager:9093
-rule_files:
-  - /etc/prometheus/alerts/alert.rules
+
 scrape_configs:
-  - job_name: prometheus
-    metrics_path: /metrics
+  - job_name: 'prometheus'
+    scrape_interval: 5s
     static_configs:
-      - targets:
-          - ${IP}:9090
-  - job_name: cosmos
-    metrics_path: /metrics
+      - targets: ['$IP:9090']
+  - job_name: 'node_exporter'
+    scrape_interval: 5s
     static_configs:
-      - targets:
-          - ${IP}:${PORT}
-        labels: {}
-  - job_name: node
-    metrics_path: /metrics
+      - targets: ['$IP:9100']
+  - job_name: "interchains"
+    metrics_path: '/metrics'
     static_configs:
-      - targets:
-          - ${IP}:9100
+      - targets: ["127.0.0.1:$PORT"]
         labels:
-          instance: ${JOB}
-  - job_name: validators
-    metrics_path: /metrics/validators
-    static_configs:
-      - targets:
-          - ${IP}:9300
-        labels: {}
-  - job_name: validator
-    metrics_path: /metrics/validator
-    relabel_configs:
-      - source_labels:
-          - address
-        target_label: __param_address
-    static_configs:
-      - targets:
-          - ${IP}:9300
-        labels:
-          address: ${VALOPER}
-  - job_name: wallet
-    metrics_path: /metrics/wallet
-    relabel_configs:
-      - source_labels:
-          - address
-        target_label: __param_address
-    static_configs:
-      - targets:
-          - ${IP}:9300
-        labels:
-          address: ${OPERATOR}
+          group: 'planq_7070-2'
+# you can add another chain in here, for example:
+#      - targets: ["127.0.0.1:<PROMETHEUS_PORT>"]
+#       labels:
+#         group: '<CHAIN_ID>'
 EOF
 
 clear
