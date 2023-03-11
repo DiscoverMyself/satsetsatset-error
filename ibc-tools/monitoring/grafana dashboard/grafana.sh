@@ -46,9 +46,41 @@ rm -f master.zip
 sudo mkdir -p /opt/grafana-plugin
 sudo mv /opt/grafana-image-renderer-master /opt/grafana-plugin/
 
-# set grafana & prometheus config for public dashboard
+# set grafana config
 curl -Ls https://raw.githubusercontent.com/DiscoverMyself/satsetsatset-error/main/ibc-tools/monitoring/grafana%20dashboard/grafana.ini > /etc/grafana/grafana.ini
 
+# set grafana login config
+sudo tee /etc/default/grafana-server <<EOF
+GRAFANA_USER=grafana
+
+GRAFANA_GROUP=grafana
+
+GRAFANA_HOME=/usr/share/grafana
+
+LOG_DIR=/var/log/grafana
+
+DATA_DIR=/var/lib/grafana
+
+MAX_OPEN_FILES=10000
+
+CONF_DIR=/etc/grafana
+
+CONF_FILE=/etc/grafana/grafana.ini
+
+RESTART_ON_UPGRADE=true
+
+PLUGINS_DIR=/var/lib/grafana/plugins
+
+PROVISIONING_CFG_DIR=/etc/grafana/provisioning
+
+GF_AUTH_ANONYMOUS_ENABLED=true
+# Only used on systemd systems
+PID_FILE_DIR=/run/grafana
+EOF
+
+
+
+# Set prometheus config
 sudo tee /etc/prometheus/prometheus.yml <<EOF
 global:
   scrape_interval: 15s
