@@ -125,3 +125,8 @@ sudo $BINARY tendermint show-node-id
 ```
 journalctl -fu $BINARY -o cat
 ```
+
+## E. Vote Governance
+```
+$BINARY tx gov vote 1 <yes/no> --from <wallet_name> --chain-id $CHAIN
+```
