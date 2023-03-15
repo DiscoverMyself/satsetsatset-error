@@ -5,6 +5,8 @@ BINARY=
 CHAIN=
 PORT=
 NODENAME=
+FOLDER=
+PORT=
 ```
 
 
@@ -40,21 +42,33 @@ sudo $BINARY keys add <wallet_name>
 ```
 sudo $BINARY keys add <wallet_name> --recover
 ```
-### 3. Check List of Wallet
+### 3. Import a Metamask private Key
+```
+$BINARY keys unsafe-import-eth-key <wallet_name>-imported <metamask_private-key>
+```
+### 4. Export to be a Private Key File
+```
+$BINARY keys unsafe-export-eth-key <wallet_name> > <wallet_name>-eth.export
+```
+### 5. Check List of Wallet
 ```
 sudo $BINARY keys list
 ```
-### 4. Delete Wallet
+### 6. Delete Wallet
 ```
 sudo $BINARY keys delete <wallet_name>
 ```
-### 5. Check Wallet Balances
+### 7. Check Wallet Balances
 ```
 sudo $BINARY query bank balances $($BINARY keys show <wallet_name> -a)
 ```
-### 6. Check Wallet Address
+### 8. Check Wallet Address
 ```
 sudo $BINARY keys show <wallet_name> -a
+```
+### 9. Transfer Funds
+```
+$BINARY tx bank send <YOUR_WALLET_ADDRESS_OR_WALLET_NAME> <TO_ADDRESS> <AMOUNT>$DENOM --gas=auto --fees=<AMOUNT&DENOM> --chain-id $CHAIN --from <wallet_name>
 ```
 
 
@@ -102,6 +116,27 @@ sudo $BINARY tx staking edit-validator \
   --fees= \ # amount & denom
   --from=<wallet_name>
 ```
+### 5. Check Validator Status
+```
+$BINARY query tendermint-validator-set | grep "$($BINARY tendermint show-address)"
+```
+### 6. Check Validator Rewards
+```
+$BINARY query distribution rewards $($BINARY keys show <wallet_name> -a) $($BINARY keys show <wallet_name> --bech val -a)
+```
+### 7. Check Commission Rewards
+```
+$BINARY query distribution commission $($BINARY keys show <wallet_name> --bech val -a)
+```
+### 8. Withdraw Delegator Reward
+```
+$BINARY tx distribution withdraw-all-rewards --from <wallet_name> --chain-id $CHAIN --fees <amount&denom> --gas auto -y
+```
+### 9. Withdraw Commission Reward
+```
+$BINARY tx distribution withdraw-rewards $($BINARY keys show <wallet_name> --bech val -a) --commission --from <wallet_name> --chain-id $CHAIN --fees <amount&denom> --gas auto -y
+```
+
 
 
 ## D. Info
@@ -124,6 +159,18 @@ sudo $BINARY tendermint show-node-id
 ### 4. Show Node Logs
 ```
 journalctl -fu $BINARY -o cat
+```
+### 5. Get list of Connected Peers
+```
+curl -sS http://localhost:$PORT/net_info | jq -r '.result.peers[] | "\(.node_info.id)@\(.remote_ip):\(.node_info.listen_addr)"' | awk -F ':' '{print $1":"$(NF)}'
+```
+### 6. Get List of Validators
+```
+$BINARY query staking validators --limit 100 -o json | jq -r '.validators[] | [.operator_address, .status, (.tokens|tonumber / pow(10; 6)), .description.moniker] | @csv' | column -t -s"," | sort -k3 -n -r | nl
+```
+### 7. Check Peers ID & Port
+```
+echo $($BINARY tendermint show-node-id)'@'$(curl -s ifconfig.me)':'$(cat $HOME/$FOLDER/config/config.toml | sed -n '/Address to listen for incoming connection/{n;p;}' | sed 's/.*://; s/".*//')
 ```
 
 ## E. Vote Governance
