@@ -5,11 +5,11 @@ notifications:
   service: discord
   discord:
     webhook:
-      id: "DISCORD_WEBHOOK_ID"
-      token: DISCORD_WEBHOOK_TOKEN
+      id: "discordwebhookid"
+      token: discordwebhooktoken
     alert-user-ids:
       - "DISCORD_USER_ID"
-    username: "DISCORD_WEBHOOK_NAME"
+    username: "discordwebhookname"
 validators:
 - name: monikername
   rpc: tcp://localhost:26657
