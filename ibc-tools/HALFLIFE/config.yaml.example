@@ -1,0 +1,27 @@
+alerts:
+  ignore-alerts:
+    - alertTypeMissedRecentBlocks
+notifications:
+  service: discord
+  discord:
+    webhook:
+      id: "DISCORD_WEBHOOK_ID"
+      token: DISCORD_WEBHOOK_TOKEN
+    alert-user-ids:
+      - "DISCORD_USER_ID"
+    username: "DISCORD_WEBHOOK_NAME"
+validators:
+- name: monikername
+  rpc: tcp://localhost:26657
+  fullnode: false
+  address: plqvalcons1
+  chain-id: planq_7070-2
+  rpc-retries: 20
+  missed-blocks-threshold: 5
+  sentry-grpc-error-threshold: null
+  sentries: null
+  slashing_warn_threshold: 99.8
+  slashing_error_threshold: 98
+  recent_blocks_to_check: 20
+  notify_every: 20
+  recent_missed_blocks_notify_threshold: 10
